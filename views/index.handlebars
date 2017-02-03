@@ -1,0 +1,32 @@
+<div class="container">
+<h1>Statements Against Texas SB4</h1>
+<p>The Texas Senate is voting on SB4, a controversial bill involving local control and immigration. Indivisible Austin has a <a target="_blank" href="https://www.indivisibleaustin.com/2017/02/01/an-immigration-attorney-and-an-activist-scholar-explain-why-sb4-is-a-terrible-idea-and-what-you-can-do-to-stop-it/">thorough description of the bill available.</a></p>
+
+<p>The State Affairs Committee held a public hearing on February 2, 2017 which where more than 500 people signed up to testify. <b>Only 5 witnesses spoke in support of the bill</b>. Despite the 16 hours of testimonies against, the Committee voted along party lines to advance the bill.</p>
+
+<p>This project seeks to collect statements from public officials, lawyers, community organizers and law enforcement regarding SB4.</p>
+
+<p>Submit a statement by filling out <a href="https://docs.google.com/forms/d/e/1FAIpQLSdJv9HgZCElUfOFytCG1DwVyYGxSuOl6F9Oxn3HtQD1ml5yug/viewform">this form</a></p>
+<p>Have a question or comment? Fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTQyoU6sy-UJYBOiPDNVQICc9mWcTTF8TsoEg93bUYihAmEA/viewform">this form</a> and we'll get back to you</p>
+
+<form id="filter_form">
+<label>Filter Statements by Role</label> 
+<select id="role_select">
+<option vale="all">All</option>
+{{#roles}}
+<option value="{{.}}">{{.}}</option>
+{{/roles}}
+</select>
+</form>
+{{#statements}}
+<div class="statement" data-role="{{person_role}}">
+  <blockquote>{{quote}}</blockquote>
+  <div class="byline">
+  <h3 class="name">-{{name}}</h3>
+  <h4 class="position">{{position}}, <span class="location">{{location}}</span></h4>
+  <!-- <h4 class="role">{{person_role}}</h4> -->
+  <a href="{{source}}" class="source">[source]</a>
+  </div>
+</div>
+{{/statements}}
+</div>
