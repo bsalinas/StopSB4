@@ -13,7 +13,7 @@ var app = express();
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-var uri = 'mongodb://'+process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@'+process.env.HOST+':'+process.env.PORT+'/'+process.env.DB;
+var uri = process.env['MONGODB_URI'] || 'mongodb://'+process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@'+process.env.HOST+':'+process.env.PORT+'/'+process.env.DB;
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
