@@ -116,6 +116,7 @@ function refreshData(){
               console.log("insterted "+result)
               console.log(result)
               db.close();
+              collectData();
             });
         })  
         
@@ -129,7 +130,6 @@ function refreshData(){
 
 app.get("/refresh", function(request, response){
   refreshData();
-  collectData();
 });
 var allData = []
 function collectData(){
