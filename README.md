@@ -8,7 +8,7 @@ It was built in a few hours to serve one purpose, but maybe you can use it for s
 ## Overview
 There's a google spreadsheet which looks something like this.
 
-![spreadsheetimage](https://cloud.githubusercontent.com/assets/2040141/22623449/2db9c86a-eb21-11e6-95ed-f9725230d196.png)
+![spreadsheetimage](https://cloud.githubusercontent.com/assets/2040141/22623519/58c68bcc-eb23-11e6-81fc-c36c572a5c93.png)
 
 The app has a function (which I've hackily hooked up to the `GET /refresh` endpoint) which will grab the data from the spreadsheet and put it into a MongoDB database. It does this by using the `columns` variable (to map from the column names in the spreadsheet to database friendly keys)
 
