@@ -1,8 +1,11 @@
-// server.js
-// where your node app starts
+/*If you want to use a local file `.env` intead of hosting on heroku
+//Then uncomment this line and add a file that contains
+MONGODB_URI=mongodb://heroku_f21xsdfsdf:o8dssdf7h1gietpbadf@ds1ds9.mldb.com:1242/heroku_sfdsfdsf24
+SPREADSHEET_ID=1asdgfdspJyodsgsBj6fyDlCVV3AdzhUtfubT6ff1YdN8
 
-// init project
-require('dotenv').config()
+These should be the connection URI for a mongodb instance and the Google Spreadsheet ID of where you are grabbing the 
+*/
+// require('dotenv').config()
 var express = require('express');
 var GoogleSpreadsheets = require("google-spreadsheets");
 var exphbs  = require('express-handlebars');
@@ -13,19 +16,15 @@ var app = express();
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-var uri = process.env['MONGODB_URI'] || 'mongodb://'+process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@'+process.env.HOST+':'+process.env.PORT+'/'+process.env.DB;
+var uri = process.env['MONGODB_URI'];
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
-// http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 
 app.get("/", function(req, response){
   console.log("root")
-    // response.sendFile(__dirname + '/views/index.html');
     console.log(allData)
     var roles = [];
     for(var i in allData)
@@ -50,15 +49,15 @@ var columns = [
   },
   {
     "doc_id":"name",
-    db_id: "name"
+    "db_id": "name"
   },
   {
-    doc_id:"position",
-    db_id:"position"
+    "doc_id":"position",
+    "db_id":"position"
   },
   {
-    doc_id:"role",
-    db_id: "person_role"
+    "doc_id":"role",
+    "db_id": "person_role"
   },
   {
     "doc_id":"location",
@@ -84,7 +83,7 @@ var columns = [
   
 function refreshData(){
   var rows = GoogleSpreadsheets.rows({
-    key:"1adLEpJyo31Bj6fxCMeyDlCVV3AdzhUtfubT6ff1YdN8",
+    key:process.env.SPREADSHEET_ID,
     worksheet:3
   }, function(err, rows){
     console.log(rows[1])
@@ -130,14 +129,15 @@ function refreshData(){
 
 app.get("/refresh", function(request, response){
   refreshData();
+  //Note: This should actually return something; probably a report of what it did.
 });
 var allData = []
+
+//This function grabs data from the spreadsheet and stores it in memory
+//Maybe we should just grab data from db whenever someone loads the page?
 function collectData(){
   MongoClient.connect(uri, function(dberr, db) {
-  // console.log(db)
   db.collection("statements").find({"verified":"Y"}).toArray(function(err, docs) {
-      // console.log("Found the following records");
-      // console.log(docs)
       allData = docs;
       db.close();
     }); 
@@ -145,17 +145,13 @@ function collectData(){
 };
 collectData();
 
+//Just an endpoint that I don't use.
 app.get("/statements",function(request, response){
   console.log("statements")
   response.json(allData);
 });
-// app.get("/", function(request, response){
-//   console.log(allData)
-//   response.send(400)
-// });
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
-  console.log("foo")
 });
